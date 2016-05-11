@@ -7,7 +7,7 @@
 -- Give a file name if you want to load a previously saved MarI/O pool. Use nil
 -- for a new pool.
 LOAD_FROM_FILE = nil
---LOAD_FROM_FILE = "backup.5.SMB1-1.state.pool"
+--LOAD_FROM_FILE = "backups/backup.5.SMB1-1.state.pool"
 
 ROM_NAME = "Super Mario Bros."
 SAVESTATE_SLOT = 1
@@ -18,6 +18,8 @@ SHOW_NETWORK = true
 SHOW_MUTATION_RATES = true
 
 SAVE_LOAD_FILE = "SMB1-1.state.pool"
+
+os.execute("mkdir backups")
 
 if ROM_NAME == "Super Mario Bros." then
 	SavestateObj = savestate.object(SAVESTATE_SLOT)
@@ -774,7 +776,7 @@ function newGeneration()
 
 	pool.generation = pool.generation + 1
 
-	writeFile("backup." .. pool.generation .. "." .. SAVE_LOAD_FILE)
+	writeFile("backups/backup." .. pool.generation .. "." .. SAVE_LOAD_FILE)
 end
 
 function initializePool()
@@ -1159,7 +1161,7 @@ while true do
 		if fitness > pool.maxFitness then
 			pool.maxFitness = fitness
 			--forms.settext(maxFitnessLabel, "Max Fitness: " .. math.floor(pool.maxFitness))
-			writeFile("backup." .. pool.generation .. "." .. SAVE_LOAD_FILE)
+			writeFile("backups/backup." .. pool.generation .. "." .. SAVE_LOAD_FILE)
 		end
 
 		emu.print("Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " fitness: " .. fitness)
