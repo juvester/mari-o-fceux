@@ -14,13 +14,16 @@
 -- 4. Load the script in FCEUX (File -> Load Lua Script)
 -- 5. Enjoy!'
 
--- There's no GUI but you can edit the following settings manually.
+-- There's no GUI like in Bizhawk but you can edit the following settings
+-- manually.
+
 
 -- #############################################################################
 -- ### SETTINGS ################################################################
 -- #############################################################################
 
 -- File name for a previously saved MarI/O pool. Use nil to start a new pool.
+-- Backups for every generation will be saved in a folder called "backups".
 LOAD_FROM_FILE = nil
 --LOAD_FROM_FILE = "backups/backup.5.SMB1-1.state.pool"
 
@@ -29,7 +32,7 @@ SHOW_BANNER = true
 SHOW_NETWORK = true
 SHOW_MUTATION_RATES = true
 
--- Load level from slot
+-- Load the level from FCEUX savestate slot
 SAVESTATE_SLOT = 1
 
 -- #############################################################################
