@@ -4,6 +4,11 @@
 -- For SMW, make sure you have a save state named "DP1.state" at the beginning of a level,
 -- and put a copy in both the Lua folder and the root directory of BizHawk.
 
+-- Give a file name if you want to load a previously saved MarI/O pool. Use nil
+-- for a new pool.
+LOAD_FROM_FILE = nil
+--LOAD_FROM_FILE = "backup.5.SMB1-1.state.pool"
+
 ROM_NAME = "Super Mario Bros."
 SAVESTATE_SLOT = 1
 
@@ -1062,8 +1067,7 @@ function loadFile(filename)
 end
 
 function loadPool()
-	local filename = SAVE_LOAD_FILE
-	loadFile(filename)
+	loadFile(LOAD_FROM_FILE)
 end
 
 function playTop()
@@ -1108,6 +1112,10 @@ writeFile("temp.pool")
 --playTopButton = forms.button(form, "Play Top", playTop, 5, 170)
 --hideBanner = forms.checkbox(form, "Hide Banner", 5, 190)
 
+-- Since we can't use forms.button in FCEUX, we have to call this manually.
+if LOAD_FROM_FILE then
+	loadPool()
+end
 
 while true do
 	local backgroundColor = 0xD0FFFFFF
