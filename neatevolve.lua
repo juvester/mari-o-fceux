@@ -1190,6 +1190,7 @@ while true do
 		if fitness > pool.maxFitness then
 			pool.maxFitness = fitness
 			--forms.settext(maxFitnessLabel, "Max Fitness: " .. math.floor(pool.maxFitness))
+			emu.print("New Max Fitness: " .. math.floor(pool.maxFitness))
 			writeFile("backups/backup." .. pool.generation .. "." .. SAVE_LOAD_FILE)
 		end
 
