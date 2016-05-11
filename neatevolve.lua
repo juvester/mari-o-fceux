@@ -4,19 +4,7 @@
 -- For SMW, make sure you have a save state named "DP1.state" at the beginning of a level,
 -- and put a copy in both the Lua folder and the root directory of BizHawk.
 
-if gameinfo.getromname() == "Super Mario World (USA)" then
-	Filename = "DP1.state"
-	ButtonNames = {
-		"A",
-		"B",
-		"X",
-		"Y",
-		"Up",
-		"Down",
-		"Left",
-		"Right",
-	}
-elseif gameinfo.getromname() == "Super Mario Bros." then
+if gameinfo.getromname() == "Super Mario Bros." then
 	Filename = "SMB1-1.state"
 	ButtonNames = {
 		"A",
@@ -56,16 +44,7 @@ TimeoutConstant = 20
 MaxNodes = 1000000
 
 function getPositions()
-	if gameinfo.getromname() == "Super Mario World (USA)" then
-		marioX = memory.read_s16_le(0x94)
-		marioY = memory.read_s16_le(0x96)
-
-		local layer1x = memory.read_s16_le(0x1A);
-		local layer1y = memory.read_s16_le(0x1C);
-
-		screenX = marioX-layer1x
-		screenY = marioY-layer1y
-	elseif gameinfo.getromname() == "Super Mario Bros." then
+	if gameinfo.getromname() == "Super Mario Bros." then
 		marioX = memory.readbyte(0x6D) * 0x100 + memory.readbyte(0x86)
 		marioY = memory.readbyte(0x03B8)+16
 
@@ -75,12 +54,7 @@ function getPositions()
 end
 
 function getTile(dx, dy)
-	if gameinfo.getromname() == "Super Mario World (USA)" then
-		x = math.floor((marioX+dx+8)/16)
-		y = math.floor((marioY+dy)/16)
-
-		return memory.readbyte(0x1C800 + math.floor(x/0x10)*0x1B0 + y*0x10 + x%0x10)
-	elseif gameinfo.getromname() == "Super Mario Bros." then
+	if gameinfo.getromname() == "Super Mario Bros." then
 		local x = marioX + dx + 8
 		local y = marioY + dy - 16
 		local page = math.floor(x/256)%2
@@ -102,19 +76,7 @@ function getTile(dx, dy)
 end
 
 function getSprites()
-	if gameinfo.getromname() == "Super Mario World (USA)" then
-		local sprites = {}
-		for slot=0,11 do
-			local status = memory.readbyte(0x14C8+slot)
-			if status ~= 0 then
-				spritex = memory.readbyte(0xE4+slot) + memory.readbyte(0x14E0+slot)*256
-				spritey = memory.readbyte(0xD8+slot) + memory.readbyte(0x14D4+slot)*256
-				sprites[#sprites+1] = {["x"]=spritex, ["y"]=spritey}
-			end
-		end
-
-		return sprites
-	elseif gameinfo.getromname() == "Super Mario Bros." then
+	if gameinfo.getromname() == "Super Mario Bros." then
 		local sprites = {}
 		for slot=0,4 do
 			local enemy = memory.readbyte(0xF+slot)
@@ -130,19 +92,7 @@ function getSprites()
 end
 
 function getExtendedSprites()
-	if gameinfo.getromname() == "Super Mario World (USA)" then
-		local extended = {}
-		for slot=0,11 do
-			local number = memory.readbyte(0x170B+slot)
-			if number ~= 0 then
-				spritex = memory.readbyte(0x171F+slot) + memory.readbyte(0x1733+slot)*256
-				spritey = memory.readbyte(0x1715+slot) + memory.readbyte(0x1729+slot)*256
-				extended[#extended+1] = {["x"]=spritex, ["y"]=spritey}
-			end
-		end
-
-		return extended
-	elseif gameinfo.getromname() == "Super Mario Bros." then
+	if gameinfo.getromname() == "Super Mario Bros." then
 		return {}
 	end
 end
@@ -1176,9 +1126,6 @@ while true do
 	local timeoutBonus = pool.currentFrame / 4
 	if timeout + timeoutBonus <= 0 then
 		local fitness = rightmost - pool.currentFrame / 2
-		if gameinfo.getromname() == "Super Mario World (USA)" and rightmost > 4816 then
-			fitness = fitness + 1000
-		end
 		if gameinfo.getromname() == "Super Mario Bros." and rightmost > 3186 then
 			fitness = fitness + 1000
 		end
