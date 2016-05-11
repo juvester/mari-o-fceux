@@ -4,7 +4,9 @@
 -- For SMW, make sure you have a save state named "DP1.state" at the beginning of a level,
 -- and put a copy in both the Lua folder and the root directory of BizHawk.
 
-if gameinfo.getromname() == "Super Mario Bros." then
+ROM_NAME = "Super Mario Bros."
+
+if ROM_NAME == "Super Mario Bros." then
 	Filename = "SMB1-1.state"
 	ButtonNames = {
 		"A",
@@ -44,7 +46,7 @@ TimeoutConstant = 20
 MaxNodes = 1000000
 
 function getPositions()
-	if gameinfo.getromname() == "Super Mario Bros." then
+	if ROM_NAME == "Super Mario Bros." then
 		marioX = memory.readbyte(0x6D) * 0x100 + memory.readbyte(0x86)
 		marioY = memory.readbyte(0x03B8)+16
 
@@ -54,7 +56,7 @@ function getPositions()
 end
 
 function getTile(dx, dy)
-	if gameinfo.getromname() == "Super Mario Bros." then
+	if ROM_NAME == "Super Mario Bros." then
 		local x = marioX + dx + 8
 		local y = marioY + dy - 16
 		local page = math.floor(x/256)%2
@@ -76,7 +78,7 @@ function getTile(dx, dy)
 end
 
 function getSprites()
-	if gameinfo.getromname() == "Super Mario Bros." then
+	if ROM_NAME == "Super Mario Bros." then
 		local sprites = {}
 		for slot=0,4 do
 			local enemy = memory.readbyte(0xF+slot)
@@ -92,7 +94,7 @@ function getSprites()
 end
 
 function getExtendedSprites()
-	if gameinfo.getromname() == "Super Mario Bros." then
+	if ROM_NAME == "Super Mario Bros." then
 		return {}
 	end
 end
@@ -1126,7 +1128,7 @@ while true do
 	local timeoutBonus = pool.currentFrame / 4
 	if timeout + timeoutBonus <= 0 then
 		local fitness = rightmost - pool.currentFrame / 2
-		if gameinfo.getromname() == "Super Mario Bros." and rightmost > 3186 then
+		if ROM_NAME == "Super Mario Bros." and rightmost > 3186 then
 			fitness = fitness + 1000
 		end
 		if fitness == 0 then
