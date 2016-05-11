@@ -880,7 +880,7 @@ function displayGenome(genome)
 		else
 			color = 0xFF000000
 		end
-		gui.drawtext(223, 24+8*o, ButtonNames[o], toRGBA(color), 9)
+		gui.drawtext(225, 26+8*o, ButtonNames[o], toRGBA(color), 0x0)
 	end
 
 	for n,neuron in pairs(network.neurons) do
@@ -968,7 +968,7 @@ function displayGenome(genome)
 	if SHOW_MUTATION_RATES then
 		local pos = 100
 		for mutation,rate in pairs(genome.mutationRates) do
-			gui.drawtext(100, pos, mutation .. ": " .. rate, toRGBA(0xFF000000), 10)
+			gui.drawtext(100, pos, mutation .. ": " .. rate, toRGBA(0xFF000000), 0x0)
 			pos = pos + 8
 		end
 	end
@@ -1174,9 +1174,9 @@ while true do
 		end
 	end
 	if not HIDE_BANNER then
-		gui.drawtext(1, 9, "Gen: " .. pool.generation .. " Species: " .. pool.currentSpecies .. " Genome: " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", toRGBA(0xFF000000), 11)
-		gui.drawtext(1, 18, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), toRGBA(0xFF000000), 11)
-		gui.drawtext(100, 18, "Max Fitness: " .. math.floor(pool.maxFitness), toRGBA(0xFF000000), 11)
+		gui.drawtext(1, 9, "Gen: " .. pool.generation .. " Species: " .. pool.currentSpecies .. " Genome: " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", toRGBA(0xFF000000), 0x0)
+		gui.drawtext(1, 18, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), toRGBA(0xFF000000), 0x0)
+		gui.drawtext(100, 18, "Max Fitness: " .. math.floor(pool.maxFitness), toRGBA(0xFF000000), 0x0)
 	end
 
 	pool.currentFrame = pool.currentFrame + 1
