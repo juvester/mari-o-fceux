@@ -1,22 +1,47 @@
 -- MarI/O by SethBling
 -- Feel free to use this code, but please do not redistribute it.
--- Intended for use with the BizHawk emulator and Super Mario World or Super Mario Bros. ROM.
--- For SMW, make sure you have a save state named "DP1.state" at the beginning of a level,
--- and put a copy in both the Lua folder and the root directory of BizHawk.
 
--- Give a file name if you want to load a previously saved MarI/O pool. Use nil
--- for a new pool.
+-- Port to FCEUX.
+-- Tested on FCEUX 2.2.2 (Ubuntu 16.04).
+
+-- #############################################################################
+-- ### Instructions ############################################################
+-- #############################################################################
+-- 1. Save this script somewhere on your computer.
+-- 2. Open Super Mario Bros. in FCEUX.
+-- 3. Go to some level and make a saveste at the beginning of the level. Use
+--    savestate slot 1 or edit the settings below.
+-- 4. Load the script in FCEUX (File -> Load Lua Script)
+-- 5. Enjoy!'
+
+-- There's no GUI but you can edit the following settings manually.
+
+-- #############################################################################
+-- ### SETTINGS ################################################################
+-- #############################################################################
+
+-- File name for a previously saved MarI/O pool. Use nil to start a new pool.
 LOAD_FROM_FILE = nil
 --LOAD_FROM_FILE = "backups/backup.5.SMB1-1.state.pool"
-
-ROM_NAME = "Super Mario Bros."
-SAVESTATE_SLOT = 1
 
 -- HUD options
 HIDE_BANNER = false
 SHOW_NETWORK = true
 SHOW_MUTATION_RATES = true
 
+-- Load level from slot
+SAVESTATE_SLOT = 1
+
+-- #############################################################################
+-- #############################################################################
+-- #############################################################################
+
+
+
+
+
+
+ROM_NAME = "Super Mario Bros."
 SAVE_LOAD_FILE = "SMB1-1.state.pool"
 
 os.execute("mkdir backups")
