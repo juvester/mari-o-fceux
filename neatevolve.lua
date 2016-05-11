@@ -7,6 +7,13 @@
 ROM_NAME = "Super Mario Bros."
 SAVESTATE_SLOT = 1
 
+-- HUD options
+HIDE_BANNER = false
+SHOW_NETWORK = true
+SHOW_MUTATION_RATES = true
+
+SAVE_LOAD_FILE = "SMB1-1.state.pool"
+
 if ROM_NAME == "Super Mario Bros." then
 	SavestateObj = savestate.object(SAVESTATE_SLOT)
 	ButtonNames = {
@@ -758,7 +765,7 @@ function newGeneration()
 
 	pool.generation = pool.generation + 1
 
-	writeFile("backup." .. pool.generation .. "." .. forms.gettext(saveLoadFile))
+	writeFile("backup." .. pool.generation .. "." .. SAVE_LOAD_FILE)
 end
 
 function initializePool()
@@ -954,7 +961,7 @@ function displayGenome(genome)
 
 	gui.drawBox(49,71,51,78,0x00000000,0x80FF0000)
 
-	if forms.ischecked(showMutationRates) then
+	if SHOW_MUTATION_RATES then
 		local pos = 100
 		for mutation,rate in pairs(genome.mutationRates) do
 			gui.drawText(100, pos, mutation .. ": " .. rate, 0xFF000000, 10)
@@ -999,7 +1006,7 @@ function writeFile(filename)
 end
 
 function savePool()
-	local filename = forms.gettext(saveLoadFile)
+	local filename = SAVE_LOAD_FILE
 	writeFile(filename)
 end
 
@@ -1008,7 +1015,7 @@ function loadFile(filename)
 	pool = newPool()
 	pool.generation = file:read("*number")
 	pool.maxFitness = file:read("*number")
-	forms.settext(maxFitnessLabel, "Max Fitness: " .. math.floor(pool.maxFitness))
+	--forms.settext(maxFitnessLabel, "Max Fitness: " .. math.floor(pool.maxFitness))
         local numSpecies = file:read("*number")
         for s=1,numSpecies do
 		local species = newSpecies()
@@ -1051,7 +1058,7 @@ function loadFile(filename)
 end
 
 function loadPool()
-	local filename = forms.gettext(saveLoadFile)
+	local filename = SAVE_LOAD_FILE
 	loadFile(filename)
 end
 
@@ -1071,43 +1078,43 @@ function playTop()
 	pool.currentSpecies = maxs
 	pool.currentGenome = maxg
 	pool.maxFitness = maxfitness
-	forms.settext(maxFitnessLabel, "Max Fitness: " .. math.floor(pool.maxFitness))
+	--forms.settext(maxFitnessLabel, "Max Fitness: " .. math.floor(pool.maxFitness))
 	initializeRun()
 	pool.currentFrame = pool.currentFrame + 1
 	return
 end
 
 function onExit()
-	forms.destroy(form)
+	--forms.destroy(form)
 end
 
 writeFile("temp.pool")
 
 event.onexit(onExit)
 
-form = forms.newform(200, 260, "Fitness")
-maxFitnessLabel = forms.label(form, "Max Fitness: " .. math.floor(pool.maxFitness), 5, 8)
-showNetwork = forms.checkbox(form, "Show Map", 5, 30)
-showMutationRates = forms.checkbox(form, "Show M-Rates", 5, 52)
-restartButton = forms.button(form, "Restart", initializePool, 5, 77)
-saveButton = forms.button(form, "Save", savePool, 5, 102)
-loadButton = forms.button(form, "Load", loadPool, 80, 102)
-saveLoadFile = forms.textbox(form, Filename .. ".pool", 170, 25, nil, 5, 148)
-saveLoadLabel = forms.label(form, "Save/Load:", 5, 129)
-playTopButton = forms.button(form, "Play Top", playTop, 5, 170)
-hideBanner = forms.checkbox(form, "Hide Banner", 5, 190)
+--form = forms.newform(200, 260, "Fitness")
+--maxFitnessLabel = forms.label(form, "Max Fitness: " .. math.floor(pool.maxFitness), 5, 8)
+--showNetwork = forms.checkbox(form, "Show Map", 5, 30)
+--showMutationRates = forms.checkbox(form, "Show M-Rates", 5, 52)
+--restartButton = forms.button(form, "Restart", initializePool, 5, 77)
+--saveButton = forms.button(form, "Save", savePool, 5, 102)
+--loadButton = forms.button(form, "Load", loadPool, 80, 102)
+--saveLoadFile = forms.textbox(form, Filename .. ".pool", 170, 25, nil, 5, 148)
+--saveLoadLabel = forms.label(form, "Save/Load:", 5, 129)
+--playTopButton = forms.button(form, "Play Top", playTop, 5, 170)
+--hideBanner = forms.checkbox(form, "Hide Banner", 5, 190)
 
 
 while true do
 	local backgroundColor = 0xD0FFFFFF
-	if not forms.ischecked(hideBanner) then
+	if not HIDE_BANNER then
 		gui.drawBox(0, 0, 300, 26, backgroundColor, backgroundColor)
 	end
 
 	local species = pool.species[pool.currentSpecies]
 	local genome = species.genomes[pool.currentGenome]
 
-	if forms.ischecked(showNetwork) then
+	if SHOW_NETWORK then
 		displayGenome(genome)
 	end
 
@@ -1139,8 +1146,8 @@ while true do
 
 		if fitness > pool.maxFitness then
 			pool.maxFitness = fitness
-			forms.settext(maxFitnessLabel, "Max Fitness: " .. math.floor(pool.maxFitness))
-			writeFile("backup." .. pool.generation .. "." .. forms.gettext(saveLoadFile))
+			--forms.settext(maxFitnessLabel, "Max Fitness: " .. math.floor(pool.maxFitness))
+			writeFile("backup." .. pool.generation .. "." .. SAVE_LOAD_FILE)
 		end
 
 		console.writeline("Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " fitness: " .. fitness)
@@ -1162,7 +1169,7 @@ while true do
 			end
 		end
 	end
-	if not forms.ischecked(hideBanner) then
+	if not HIDE_BANNER then
 		gui.drawText(0, 0, "Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", 0xFF000000, 11)
 		gui.drawText(0, 12, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), 0xFF000000, 11)
 		gui.drawText(100, 12, "Max Fitness: " .. math.floor(pool.maxFitness), 0xFF000000, 11)
