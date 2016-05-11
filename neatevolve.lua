@@ -24,8 +24,8 @@
 LOAD_FROM_FILE = nil
 --LOAD_FROM_FILE = "backups/backup.5.SMB1-1.state.pool"
 
--- HUD options
-HIDE_BANNER = false
+-- HUD options. Use "false" to hide elements (might improve performance).
+SHOW_BANNER = true
 SHOW_NETWORK = true
 SHOW_MUTATION_RATES = true
 
@@ -1147,7 +1147,7 @@ end
 
 while true do
 	local backgroundColor = 0xD0FFFFFF
-	if not HIDE_BANNER then
+	if SHOW_BANNER then
 		gui.drawbox(0, 0, 255, 25, toRGBA(backgroundColor), toRGBA(backgroundColor))
 	end
 
@@ -1209,7 +1209,7 @@ while true do
 			end
 		end
 	end
-	if not HIDE_BANNER then
+	if SHOW_BANNER then
 		gui.drawtext(1, 9, "Gen: " .. pool.generation .. " Species: " .. pool.currentSpecies .. " Genome: " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", toRGBA(0xFF000000), 0x0)
 		gui.drawtext(1, 18, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), toRGBA(0xFF000000), 0x0)
 		gui.drawtext(100, 18, "Max Fitness: " .. math.floor(pool.maxFitness), toRGBA(0xFF000000), 0x0)
