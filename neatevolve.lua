@@ -1090,7 +1090,7 @@ end
 
 writeFile("temp.pool")
 
-event.onexit(onExit)
+--event.onexit(onExit)
 
 --form = forms.newform(200, 260, "Fitness")
 --maxFitnessLabel = forms.label(form, "Max Fitness: " .. math.floor(pool.maxFitness), 5, 8)
