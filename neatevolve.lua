@@ -5,9 +5,10 @@
 -- and put a copy in both the Lua folder and the root directory of BizHawk.
 
 ROM_NAME = "Super Mario Bros."
+SAVESTATE_SLOT = 1
 
 if ROM_NAME == "Super Mario Bros." then
-	Filename = "SMB1-1.state"
+	SavestateObj = savestate.object(SAVESTATE_SLOT)
 	ButtonNames = {
 		"A",
 		"B",
@@ -780,7 +781,7 @@ function clearJoypad()
 end
 
 function initializeRun()
-	savestate.load(Filename);
+	savestate.load(SavestateObj);
 	rightmost = 0
 	pool.currentFrame = 0
 	timeout = TimeoutConstant
