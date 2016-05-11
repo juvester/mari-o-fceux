@@ -53,6 +53,10 @@ TimeoutConstant = 20
 
 MaxNodes = 1000000
 
+function toRGBA(ARGB)
+	return bit.lshift(ARGB, 8) + bit.rshift(ARGB, 24)
+end
+
 function getPositions()
 	if ROM_NAME == "Super Mario Bros." then
 		marioX = memory.readbyte(0x6D) * 0x100 + memory.readbyte(0x86)
@@ -876,7 +880,7 @@ function displayGenome(genome)
 		else
 			color = 0xFF000000
 		end
-		gui.drawtext(223, 24+8*o, ButtonNames[o], color, 9)
+		gui.drawtext(223, 24+8*o, ButtonNames[o], toRGBA(color), 9)
 	end
 
 	for n,neuron in pairs(network.neurons) do
@@ -926,7 +930,7 @@ function displayGenome(genome)
 		end
 	end
 
-	gui.drawbox(50-BoxRadius*5-3,70-BoxRadius*5-3,50+BoxRadius*5+2,70+BoxRadius*5+2,0xFF000000, 0x80808080)
+	gui.drawbox(50-BoxRadius*5-3,70-BoxRadius*5-3,50+BoxRadius*5+2,70+BoxRadius*5+2,toRGBA(0xFF000000), toRGBA(0x80808080))
 	for n,cell in pairs(cells) do
 		if n > Inputs or cell.value ~= 0 then
 			local color = math.floor((cell.value+1)/2*256)
@@ -937,7 +941,7 @@ function displayGenome(genome)
 				opacity = 0x50000000
 			end
 			color = opacity + color*0x10000 + color*0x100 + color
-			gui.drawbox(cell.x-2,cell.y-2,cell.x+2,cell.y+2,opacity,color)
+			gui.drawbox(cell.x-2,cell.y-2,cell.x+2,cell.y+2,toRGBA(opacity),toRGBA(color))
 		end
 	end
 	for _,gene in pairs(genome.genes) do
@@ -955,16 +959,16 @@ function displayGenome(genome)
 			else
 				color = opacity + 0x800000 + 0x100*color
 			end
-			gui.drawline(c1.x+1, c1.y, c2.x-3, c2.y, color)
+			gui.drawline(c1.x+1, c1.y, c2.x-3, c2.y, toRGBA(color))
 		end
 	end
 
-	gui.drawbox(49,71,51,78,0x00000000,0x80FF0000)
+	gui.drawbox(49,71,51,78,toRGBA(0x00000000),toRGBA(0x80FF0000))
 
 	if SHOW_MUTATION_RATES then
 		local pos = 100
 		for mutation,rate in pairs(genome.mutationRates) do
-			gui.drawtext(100, pos, mutation .. ": " .. rate, 0xFF000000, 10)
+			gui.drawtext(100, pos, mutation .. ": " .. rate, toRGBA(0xFF000000), 10)
 			pos = pos + 8
 		end
 	end
@@ -1108,7 +1112,7 @@ writeFile("temp.pool")
 while true do
 	local backgroundColor = 0xD0FFFFFF
 	if not HIDE_BANNER then
-		gui.drawbox(0, 0, 300, 26, backgroundColor, backgroundColor)
+		gui.drawbox(0, 0, 300, 26, toRGBA(backgroundColor), toRGBA(backgroundColor))
 	end
 
 	local species = pool.species[pool.currentSpecies]
@@ -1170,9 +1174,9 @@ while true do
 		end
 	end
 	if not HIDE_BANNER then
-		gui.drawtext(0, 0, "Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", 0xFF000000, 11)
-		gui.drawtext(0, 12, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), 0xFF000000, 11)
-		gui.drawtext(100, 12, "Max Fitness: " .. math.floor(pool.maxFitness), 0xFF000000, 11)
+		gui.drawtext(0, 0, "Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", toRGBA(0xFF000000), 11)
+		gui.drawtext(0, 12, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), toRGBA(0xFF000000), 11)
+		gui.drawtext(100, 12, "Max Fitness: " .. math.floor(pool.maxFitness), toRGBA(0xFF000000), 11)
 	end
 
 	pool.currentFrame = pool.currentFrame + 1
