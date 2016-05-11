@@ -1112,7 +1112,7 @@ writeFile("temp.pool")
 while true do
 	local backgroundColor = 0xD0FFFFFF
 	if not HIDE_BANNER then
-		gui.drawbox(0, 0, 300, 26, toRGBA(backgroundColor), toRGBA(backgroundColor))
+		gui.drawbox(0, 0, 255, 25, toRGBA(backgroundColor), toRGBA(backgroundColor))
 	end
 
 	local species = pool.species[pool.currentSpecies]
@@ -1174,9 +1174,9 @@ while true do
 		end
 	end
 	if not HIDE_BANNER then
-		gui.drawtext(0, 0, "Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", toRGBA(0xFF000000), 11)
-		gui.drawtext(0, 12, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), toRGBA(0xFF000000), 11)
-		gui.drawtext(100, 12, "Max Fitness: " .. math.floor(pool.maxFitness), toRGBA(0xFF000000), 11)
+		gui.drawtext(1, 9, "Gen: " .. pool.generation .. " Species: " .. pool.currentSpecies .. " Genome: " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", toRGBA(0xFF000000), 11)
+		gui.drawtext(1, 18, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), toRGBA(0xFF000000), 11)
+		gui.drawtext(100, 18, "Max Fitness: " .. math.floor(pool.maxFitness), toRGBA(0xFF000000), 11)
 	end
 
 	pool.currentFrame = pool.currentFrame + 1
