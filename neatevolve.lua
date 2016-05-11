@@ -1098,7 +1098,8 @@ function onExit()
 	--forms.destroy(form)
 end
 
-writeFile("temp.pool")
+-- This seems unnecessary.
+--writeFile("temp.pool")
 
 --event.onexit(onExit)
 
