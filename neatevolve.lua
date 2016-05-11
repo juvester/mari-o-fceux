@@ -88,6 +88,38 @@ TimeoutConstant = 20
 
 MaxNodes = 1000000
 
+
+CLICK_COOLDOWN = 0	-- Only used in processMouseClicks()
+function processMouseClicks()
+	-- A single mouse click seems to be registered multiple times so wait a bit
+	-- before reading input again.
+	if CLICK_COOLDOWN > 0 then
+		CLICK_COOLDOWN = CLICK_COOLDOWN - 1
+		return
+	end
+
+	local keys = input.get()
+	if keys.click == 1 then
+		if keys.ymouse < 25 then
+			SHOW_BANNER = not SHOW_BANNER
+		elseif keys.ymouse >=25 and keys.ymouse < 128 then
+			SHOW_NETWORK = not SHOW_NETWORK
+		elseif keys.ymouse >= 128 and keys.ymouse < 200 then
+			SHOW_MUTATION_RATES = not SHOW_MUTATION_RATES
+		elseif keys.xmouse < 25 and keys.ymouse > 223 then
+			playTop()
+		elseif keys.xmouse > 222 and keys.ymouse > 223 and input.popup("Are you sure you want to restart?") == "yes" then
+			initializePool()
+		end
+		CLICK_COOLDOWN = 10
+	end
+end
+
+function drawButtonsFCEUX()
+	gui.drawtext(0, 225, "PlayTop")
+	gui.drawtext(222, 225, "Restart", 0x000000FF, 0xFF0000FF)
+end
+
 function toRGBA(ARGB)
 	return bit.lshift(ARGB, 8) + bit.rshift(ARGB, 24)
 end
@@ -1221,5 +1253,7 @@ while true do
 
 	pool.currentFrame = pool.currentFrame + 1
 
+	drawButtonsFCEUX()
+	processMouseClicks()
 	emu.frameadvance();
 end
