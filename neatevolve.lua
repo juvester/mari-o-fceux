@@ -291,7 +291,7 @@ end
 function evaluateNetwork(network, inputs)
 	table.insert(inputs, 1)
 	if #inputs ~= Inputs then
-		console.writeline("Incorrect number of neural network inputs.")
+		emu.print("Incorrect number of neural network inputs.")
 		return {}
 	end
 
@@ -1150,7 +1150,7 @@ while true do
 			writeFile("backup." .. pool.generation .. "." .. SAVE_LOAD_FILE)
 		end
 
-		console.writeline("Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " fitness: " .. fitness)
+		emu.print("Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " fitness: " .. fitness)
 		pool.currentSpecies = 1
 		pool.currentGenome = 1
 		while fitnessAlreadyMeasured() do
