@@ -926,7 +926,7 @@ function displayGenome(genome)
 		end
 	end
 
-	gui.drawBox(50-BoxRadius*5-3,70-BoxRadius*5-3,50+BoxRadius*5+2,70+BoxRadius*5+2,0xFF000000, 0x80808080)
+	gui.drawbox(50-BoxRadius*5-3,70-BoxRadius*5-3,50+BoxRadius*5+2,70+BoxRadius*5+2,0xFF000000, 0x80808080)
 	for n,cell in pairs(cells) do
 		if n > Inputs or cell.value ~= 0 then
 			local color = math.floor((cell.value+1)/2*256)
@@ -937,7 +937,7 @@ function displayGenome(genome)
 				opacity = 0x50000000
 			end
 			color = opacity + color*0x10000 + color*0x100 + color
-			gui.drawBox(cell.x-2,cell.y-2,cell.x+2,cell.y+2,opacity,color)
+			gui.drawbox(cell.x-2,cell.y-2,cell.x+2,cell.y+2,opacity,color)
 		end
 	end
 	for _,gene in pairs(genome.genes) do
@@ -959,7 +959,7 @@ function displayGenome(genome)
 		end
 	end
 
-	gui.drawBox(49,71,51,78,0x00000000,0x80FF0000)
+	gui.drawbox(49,71,51,78,0x00000000,0x80FF0000)
 
 	if SHOW_MUTATION_RATES then
 		local pos = 100
@@ -1108,7 +1108,7 @@ writeFile("temp.pool")
 while true do
 	local backgroundColor = 0xD0FFFFFF
 	if not HIDE_BANNER then
-		gui.drawBox(0, 0, 300, 26, backgroundColor, backgroundColor)
+		gui.drawbox(0, 0, 300, 26, backgroundColor, backgroundColor)
 	end
 
 	local species = pool.species[pool.currentSpecies]
