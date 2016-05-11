@@ -930,7 +930,7 @@ function displayGenome(genome)
 		end
 	end
 
-	gui.drawbox(50-BoxRadius*5-3,70-BoxRadius*5-3,50+BoxRadius*5+2,70+BoxRadius*5+2,toRGBA(0xFF000000), toRGBA(0x80808080))
+	gui.drawbox(50-BoxRadius*5-3,70-BoxRadius*5-3,50+BoxRadius*5+2,70+BoxRadius*5+2,toRGBA(0x80808080),toRGBA(0xFF000000))
 	for n,cell in pairs(cells) do
 		if n > Inputs or cell.value ~= 0 then
 			local color = math.floor((cell.value+1)/2*256)
@@ -941,7 +941,7 @@ function displayGenome(genome)
 				opacity = 0x50000000
 			end
 			color = opacity + color*0x10000 + color*0x100 + color
-			gui.drawbox(cell.x-2,cell.y-2,cell.x+2,cell.y+2,toRGBA(opacity),toRGBA(color))
+			gui.drawbox(cell.x-2,cell.y-2,cell.x+2,cell.y+2,toRGBA(color),toRGBA(opacity))
 		end
 	end
 	for _,gene in pairs(genome.genes) do
@@ -963,7 +963,7 @@ function displayGenome(genome)
 		end
 	end
 
-	gui.drawbox(49,71,51,78,toRGBA(0x00000000),toRGBA(0x80FF0000))
+	gui.drawbox(49,71,51,78,toRGBA(0x80FF0000),toRGBA(0x00000000))
 
 	if SHOW_MUTATION_RATES then
 		local pos = 100
