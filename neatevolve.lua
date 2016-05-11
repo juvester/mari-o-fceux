@@ -318,7 +318,7 @@ function evaluateNetwork(network, inputs)
 
 	local outputs = {}
 	for o=1,Outputs do
-		local button = "P1 " .. ButtonNames[o]
+		local button = ButtonNames[o]
 		if network.neurons[MaxNodes+o].value > 0 then
 			outputs[button] = true
 		else
