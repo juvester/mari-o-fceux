@@ -12,10 +12,10 @@ if ROM_NAME == "Super Mario Bros." then
 	ButtonNames = {
 		"A",
 		"B",
-		"Up",
-		"Down",
-		"Left",
-		"Right",
+		"up",
+		"down",
+		"left",
+		"right",
 	}
 end
 
@@ -775,9 +775,9 @@ end
 function clearJoypad()
 	controller = {}
 	for b = 1,#ButtonNames do
-		controller["P1 " .. ButtonNames[b]] = false
+		controller[ButtonNames[b]] = false
 	end
-	joypad.set(controller)
+	joypad.set(1, controller)
 end
 
 function initializeRun()
@@ -800,16 +800,16 @@ function evaluateCurrent()
 	inputs = getInputs()
 	controller = evaluateNetwork(genome.network, inputs)
 
-	if controller["P1 Left"] and controller["P1 Right"] then
-		controller["P1 Left"] = false
-		controller["P1 Right"] = false
+	if controller["left"] and controller["right"] then
+		controller["left"] = false
+		controller["right"] = false
 	end
-	if controller["P1 Up"] and controller["P1 Down"] then
-		controller["P1 Up"] = false
-		controller["P1 Down"] = false
+	if controller["up"] and controller["down"] then
+		controller["up"] = false
+		controller["down"] = false
 	end
 
-	joypad.set(controller)
+	joypad.set(1, controller)
 end
 
 if pool == nil then
@@ -1115,7 +1115,7 @@ while true do
 		evaluateCurrent()
 	end
 
-	joypad.set(controller)
+	joypad.set(1, controller)
 
 	getPositions()
 	if marioX > rightmost then
