@@ -88,7 +88,6 @@ TimeoutConstant = 20
 
 MaxNodes = 1000000
 
-
 CLICK_COOLDOWN = 0	-- Only used in processMouseClicks()
 function processMouseClicks()
 	-- A single mouse click seems to be registered multiple times so wait a bit
@@ -100,24 +99,29 @@ function processMouseClicks()
 
 	local keys = input.get()
 	if keys.click == 1 then
-		if keys.ymouse < 25 then
-			SHOW_BANNER = not SHOW_BANNER
-		elseif keys.ymouse >=25 and keys.ymouse < 128 then
-			SHOW_NETWORK = not SHOW_NETWORK
-		elseif keys.ymouse >= 128 and keys.ymouse < 200 then
-			SHOW_MUTATION_RATES = not SHOW_MUTATION_RATES
-		elseif keys.xmouse < 25 and keys.ymouse > 223 then
-			playTop()
-		elseif keys.xmouse > 222 and keys.ymouse > 223 and input.popup("Are you sure you want to restart?") == "yes" then
-			initializePool()
-		end
 		CLICK_COOLDOWN = 10
+
+		if keys.xmouse >= 222 and keys.xmouse <= 255 and keys.ymouse >= 8 and keys.ymouse <= 14 and SHOW_BANNER then
+			playTop()
+		elseif keys.xmouse >= 222 and keys.xmouse <= 255 and keys.ymouse >= 19 and keys.ymouse <= 25 and SHOW_BANNER then
+			if input.popup("Are you sure you want to restart?") == "yes" then
+				initializePool()
+			else
+				return
+			end
+		elseif keys.xmouse >= 0 and keys.xmouse <= 255 and keys.ymouse >= 0 and keys.ymouse <= 25 then
+			SHOW_BANNER = not SHOW_BANNER
+		elseif keys.xmouse >= 0 and keys.xmouse <= 255 and keys.ymouse >=26 and keys.ymouse <= 102 then
+			SHOW_NETWORK = not SHOW_NETWORK
+		elseif keys.xmouse >= 0 and keys.xmouse <= 255 and keys.ymouse >= 103 and keys.ymouse <= 231 then
+			SHOW_MUTATION_RATES = not SHOW_MUTATION_RATES
+		end
 	end
 end
 
 function drawButtonsFCEUX()
-	gui.drawtext(0, 225, "PlayTop")
-	gui.drawtext(222, 225, "Restart", 0x000000FF, 0xFF0000FF)
+	gui.drawtext(222, 8, "PlayTop", 0x000000FF, 0x00AA00FF)
+	gui.drawtext(222, 19, "Restart", 0x000000FF, 0xFF0000FF)
 end
 
 function toRGBA(ARGB)
@@ -1249,11 +1253,11 @@ while true do
 		gui.drawtext(1, 9, "Gen: " .. pool.generation .. " Species: " .. pool.currentSpecies .. " Genome: " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", toRGBA(0xFF000000), 0x0)
 		gui.drawtext(1, 18, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), toRGBA(0xFF000000), 0x0)
 		gui.drawtext(100, 18, "Max Fitness: " .. math.floor(pool.maxFitness), toRGBA(0xFF000000), 0x0)
+		drawButtonsFCEUX()
 	end
 
 	pool.currentFrame = pool.currentFrame + 1
 
-	drawButtonsFCEUX()
 	processMouseClicks()
 	emu.frameadvance();
 end
