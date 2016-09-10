@@ -1,5 +1,5 @@
 # MarI/O FCEUX
-FCEUX port of [SethBling's MarI/O.][1]
+FCEUX port of [SethBling's MarI/O.][1] All credits to SethBling.
 
 <kbd>![Demonstration](demo.gif)</kbd>
 
