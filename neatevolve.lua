@@ -178,7 +178,7 @@ end
 function getInputs()
 	getPositions()
 
-	sprites = getSprites()
+	local sprites = getSprites()
 
 	local inputs = {}
 
