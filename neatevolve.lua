@@ -175,15 +175,10 @@ function getSprites()
 	return sprites
 end
 
-function getExtendedSprites()
-	return {}
-end
-
 function getInputs()
 	getPositions()
 
 	sprites = getSprites()
-	extended = getExtendedSprites()
 
 	local inputs = {}
 
@@ -200,14 +195,6 @@ function getInputs()
 				distx = math.abs(sprites[i]["x"] - (marioX+dx))
 				disty = math.abs(sprites[i]["y"] - (marioY+dy))
 				if distx <= 8 and disty <= 8 then
-					inputs[#inputs] = -1
-				end
-			end
-
-			for i = 1,#extended do
-				distx = math.abs(extended[i]["x"] - (marioX+dx))
-				disty = math.abs(extended[i]["y"] - (marioY+dy))
-				if distx < 8 and disty < 8 then
 					inputs[#inputs] = -1
 				end
 			end
