@@ -1214,7 +1214,10 @@ while true do
 			writeFile("backups/backup." .. pool.generation .. "." .. SAVE_LOAD_FILE)
 		end
 
-		emu.print("Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " fitness: " .. fitness)
+		emu.print("Gen: " 	.. pool.generation 	..
+			"  Species: " 	.. pool.currentSpecies 	..
+			"  Genome: " 	.. pool.currentGenome 	..
+			"  Fitness: " 	.. fitness)
 		pool.currentSpecies = 1
 		pool.currentGenome = 1
 		while fitnessAlreadyMeasured() do
@@ -1235,7 +1238,7 @@ while true do
 	end
 	if SHOW_BANNER then
 		gui.drawtext(1, 9, "Gen: " .. pool.generation .. " Species: " .. pool.currentSpecies .. " Genome: " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", toRGBA(0xFF000000), 0x0)
-		gui.drawtext(1, 18, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), toRGBA(0xFF000000), 0x0)
+		gui.drawtext(1, 18, "Fitness: " .. math.floor(rightmost - (pool.currentFrame / 2)), toRGBA(0xFF000000), 0x0)
 		gui.drawtext(100, 18, "Max Fitness: " .. math.floor(pool.maxFitness), toRGBA(0xFF000000), 0x0)
 		drawButtonsFCEUX()
 	end
