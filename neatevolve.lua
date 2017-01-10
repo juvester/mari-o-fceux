@@ -44,22 +44,19 @@ SAVESTATE_SLOT = 1
 
 
 
-ROM_NAME = "Super Mario Bros."
 SAVE_LOAD_FILE = "SMB1-1.state.pool"
 
 os.execute("mkdir backups")
 
-if ROM_NAME == "Super Mario Bros." then
-	SavestateObj = savestate.object(SAVESTATE_SLOT)
-	ButtonNames = {
-		"A",
-		"B",
-		"up",
-		"down",
-		"left",
-		"right",
-	}
-end
+SavestateObj = savestate.object(SAVESTATE_SLOT)
+ButtonNames = {
+	"A",
+	"B",
+	"up",
+	"down",
+	"left",
+	"right",
+}
 
 BoxRadius = 6
 InputSize = (BoxRadius*2+1)*(BoxRadius*2+1)
@@ -137,57 +134,49 @@ function isDead()
 end
 
 function getPositions()
-	if ROM_NAME == "Super Mario Bros." then
-		marioX = memory.readbyte(0x6D) * 0x100 + memory.readbyte(0x86)
-		marioY = memory.readbyte(0x03B8)+16
+	marioX = memory.readbyte(0x6D) * 0x100 + memory.readbyte(0x86)
+	marioY = memory.readbyte(0x03B8)+16
 
-		screenX = memory.readbyte(0x03AD)
-		screenY = memory.readbyte(0x03B8)
-	end
+	screenX = memory.readbyte(0x03AD)
+	screenY = memory.readbyte(0x03B8)
 end
 
 function getTile(dx, dy)
-	if ROM_NAME == "Super Mario Bros." then
-		local x = marioX + dx + 8
-		local y = marioY + dy - 16
-		local page = math.floor(x/256)%2
+	local x = marioX + dx + 8
+	local y = marioY + dy - 16
+	local page = math.floor(x/256)%2
 
-		local subx = math.floor((x%256)/16)
-		local suby = math.floor((y - 32)/16)
-		local addr = 0x500 + page*13*16+suby*16+subx
+	local subx = math.floor((x%256)/16)
+	local suby = math.floor((y - 32)/16)
+	local addr = 0x500 + page*13*16+suby*16+subx
 
-		if suby >= 13 or suby < 0 then
-			return 0
-		end
+	if suby >= 13 or suby < 0 then
+		return 0
+	end
 
-		if memory.readbyte(addr) ~= 0 then
-			return 1
-		else
-			return 0
-		end
+	if memory.readbyte(addr) ~= 0 then
+		return 1
+	else
+		return 0
 	end
 end
 
 function getSprites()
-	if ROM_NAME == "Super Mario Bros." then
-		local sprites = {}
-		for slot=0,4 do
-			local enemy = memory.readbyte(0xF+slot)
-			if enemy ~= 0 then
-				local ex = memory.readbyte(0x6E + slot)*0x100 + memory.readbyte(0x87+slot)
-				local ey = memory.readbyte(0xCF + slot)+24
-				sprites[#sprites+1] = {["x"]=ex,["y"]=ey}
-			end
+	local sprites = {}
+	for slot=0,4 do
+		local enemy = memory.readbyte(0xF+slot)
+		if enemy ~= 0 then
+			local ex = memory.readbyte(0x6E + slot)*0x100 + memory.readbyte(0x87+slot)
+			local ey = memory.readbyte(0xCF + slot)+24
+			sprites[#sprites+1] = {["x"]=ex,["y"]=ey}
 		end
-
-		return sprites
 	end
+
+	return sprites
 end
 
 function getExtendedSprites()
-	if ROM_NAME == "Super Mario Bros." then
-		return {}
-	end
+	return {}
 end
 
 function getInputs()
@@ -1223,7 +1212,7 @@ while true do
 	local timeoutBonus = pool.currentFrame / 4
 	if timeout + timeoutBonus <= 0 or isDead() then
 		local fitness = rightmost - pool.currentFrame / 2
-		if ROM_NAME == "Super Mario Bros." and rightmost > 3186 then
+		if rightmost > 3186 then
 			fitness = fitness + 1000
 		end
 		if fitness == 0 then
