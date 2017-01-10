@@ -1142,9 +1142,9 @@ function playTop()
 	return
 end
 
-function onExit()
+--function onExit()
 	--forms.destroy(form)
-end
+--end
 
 -- This seems unnecessary.
 --writeFile("temp.pool")
