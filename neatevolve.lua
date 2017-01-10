@@ -128,6 +128,14 @@ function toRGBA(ARGB)
 	return bit.lshift(ARGB, 8) + bit.rshift(ARGB, 24)
 end
 
+function isDead()
+	local playerState = memory.readbyte(0x000E)
+
+	return playerState == 0x0B or 		-- Dying
+		playerState == 0x06 or 		-- Dead
+		memory.readbyte(0x00B5) > 1	-- Below viewport (in pit)
+end
+
 function getPositions()
 	if ROM_NAME == "Super Mario Bros." then
 		marioX = memory.readbyte(0x6D) * 0x100 + memory.readbyte(0x86)
@@ -1213,7 +1221,7 @@ while true do
 
 
 	local timeoutBonus = pool.currentFrame / 4
-	if timeout + timeoutBonus <= 0 then
+	if timeout + timeoutBonus <= 0 or isDead() then
 		local fitness = rightmost - pool.currentFrame / 2
 		if ROM_NAME == "Super Mario Bros." and rightmost > 3186 then
 			fitness = fitness + 1000
