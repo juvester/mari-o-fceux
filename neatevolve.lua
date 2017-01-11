@@ -1169,9 +1169,9 @@ if LOAD_FROM_FILE then
 end
 
 while true do
-	local backgroundColor = 0xD0FFFFFF
+	local backgroundColor = 0xFFFFFFFF
 	if SHOW_BANNER then
-		gui.drawbox(0, 0, 255, 25, toRGBA(backgroundColor), toRGBA(backgroundColor))
+		gui.drawbox(0, 8, 255, 25, toRGBA(backgroundColor), toRGBA(backgroundColor))
 	end
 
 	local species = pool.species[pool.currentSpecies]
